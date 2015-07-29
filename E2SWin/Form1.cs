@@ -53,14 +53,33 @@ namespace E2SWin
 
             foreach(string xlsxFile in xlsxFiles)
             {
-                
-                List<List<string>> ret = ExcelParser.parseXlsx(xlsxFile);
-                foreach (var i in ret)
+
+                List<SheetDataStruct> ret = ExcelParser.parseXlsx(xlsxFile, 2);
+
+                foreach (var r in ret)
                 {
-                    foreach (var j in i)
+                    this.textBox_log.Text += r.sheetName.ToString();
+                    this.textBox_log.Text += Environment.NewLine;
+                    foreach(var x in r.contentRow)
                     {
-                        this.textBox_log.Text += j.ToString();
+                        this.textBox_log.Text += x.ToString();
                         this.textBox_log.Text += "\t";
+                    }
+                    this.textBox_log.Text += Environment.NewLine;
+                    foreach(var y in r.chsDescription)
+                    {
+                        this.textBox_log.Text += y.ToString();
+                        this.textBox_log.Text += "\t";
+                    }
+                    this.textBox_log.Text += Environment.NewLine;
+                    foreach (var z in r.tableData)
+                    {
+                        foreach(var zz in z)
+                        {
+                            this.textBox_log.Text += zz.ToString();
+                            this.textBox_log.Text += "\t";
+                        }
+                        this.textBox_log.Text += Environment.NewLine;
                     }
                     this.textBox_log.Text += Environment.NewLine;
                 }
@@ -68,7 +87,7 @@ namespace E2SWin
 
 
             // 开始处理
-            encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
+            //encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
         }
 
         private delegate void NameCallBack(string varText);
