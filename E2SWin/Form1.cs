@@ -7,14 +7,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Collections;
 
 namespace E2SWin
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public Encoder encoder = new Encoder();
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void button_excelFolderPath_Click(object sender, EventArgs e)
+        {
+            // 文件夹选取窗口
+            FolderBrowserDialog fDialog = new FolderBrowserDialog();
+            fDialog.SelectedPath = this.textBox_excelFolderPath.Text;
+            fDialog.Description = "请选取Excel存放目录";
+            if(fDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            // 得到excel文件夹路径并更新textbox
+            this.textBox_excelFolderPath.Text = fDialog.SelectedPath;
+
+            // 更新设置
+        }
+
+        private void button_export_Click(object sender, EventArgs e)
+        {
+            // 清空log
+            this.textBox_log.Text = string.Empty;
+            textBox_log.Text += DateTime.Now.ToString() + "\t---开始处理--- \r\n";
+            // 
+            string[] xlsFiles = Directory.GetFiles(this.textBox_excelFolderPath.Text, "*.xls", SearchOption.AllDirectories);
+            string[] xlsxFiles = Directory.GetFiles(this.textBox_excelFolderPath.Text, "*.xlsx", SearchOption.AllDirectories);
+
+
+            // 罗列文件
+            textBox_log.Text += DateTime.Now.ToString() + "\tExcel03文件共计：" + xlsFiles.Length.ToString() + "个。\r\n";
+            textBox_log.Text += DateTime.Now.ToString() + "\tExcel07文件共计：" + xlsxFiles.Length.ToString() + "个。\r\n";
+
+
+            foreach(string xlsxFile in xlsxFiles)
+            {
+                
+                List<List<string>> ret = ExcelParser.parseXlsx(xlsxFile);
+                foreach (var i in ret)
+                {
+                    foreach (var j in i)
+                    {
+                        this.textBox_log.Text += j.ToString();
+                        this.textBox_log.Text += "\t";
+                    }
+                    this.textBox_log.Text += Environment.NewLine;
+                }
+            }
+
+
+            // 开始处理
+            encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
+        }
+
+        private delegate void NameCallBack(string varText);
+        public void UpdateTextBox(string input)
+        {
+            if (InvokeRequired)
+            {
+                textBox_log.BeginInvoke(new NameCallBack(UpdateTextBox), new object[] { input });
+            }
+            else
+            {
+                textBox_log.Text = input;
+                // textBox.Text = textBox.Text + Environment.NewLine + input // This might work as append in next line but haven't tested so not sure
+            }
         }
     }
 }

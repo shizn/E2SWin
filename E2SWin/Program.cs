@@ -16,7 +16,10 @@ namespace E2SWin
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
+
+        // 用作外部更新Textbox
+        //public static readonly MainForm MainWindow = new MainForm();
     }
 }
