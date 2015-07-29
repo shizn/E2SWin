@@ -54,7 +54,8 @@ namespace E2SWin
             foreach(string xlsxFile in xlsxFiles)
             {
 
-                List<SheetDataStruct> ret = ExcelParser.parseXlsx(xlsxFile, 2);
+                // 供测试用
+                List<SheetDataInfo> ret = ExcelParser.parseXlsx(xlsxFile, 2);
 
                 foreach (var r in ret)
                 {
@@ -83,11 +84,12 @@ namespace E2SWin
                     }
                     this.textBox_log.Text += Environment.NewLine;
                 }
+                // 供测试用
             }
 
 
             // 开始处理
-            //encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
+            encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
         }
 
         private delegate void NameCallBack(string varText);

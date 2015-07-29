@@ -17,9 +17,9 @@ namespace E2SWin
             return workbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(id);
         }
 
-        public static List<SheetDataStruct> parseXlsx(string path, int startLine)
+        public static List<SheetDataInfo> parseXlsx(string path, int startLine)
         {
-            List<SheetDataStruct> result = new List<SheetDataStruct>();
+            List<SheetDataInfo> result = new List<SheetDataInfo>();
 
             using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Open(path, false))
             {
@@ -27,7 +27,7 @@ namespace E2SWin
                 //DocumentFormat.OpenXml.Spreadsheet.Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.Sheets;
                 //foreach (DocumentFormat.OpenXml.OpenXmlElement sheet in sheets)
                 //{
-                //    result.Add(new SheetDataStruct());
+                //    result.Add(new SheetDataInfo());
                 //    result.Last().sheetName = GetSheetName(sheet);
                 //}
 
@@ -38,7 +38,7 @@ namespace E2SWin
                     string partRelationshipId = spreadsheetDocument.WorkbookPart.GetIdOfPart(w);
                     var correspondingSheet = sheetslist.FirstOrDefault(s => s.Id.HasValue && s.Id.Value == partRelationshipId);
                     // 读取sheet的名称并存入结果
-                    result.Add(new SheetDataStruct());
+                    result.Add(new SheetDataInfo());
                     result.Last().sheetName = correspondingSheet.Name;
                     // 获得对应sheet名的工作表
                     SheetData sheetData = w.Worksheet.Elements<SheetData>().First();
