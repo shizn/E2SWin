@@ -44,7 +44,7 @@ namespace E2SWin
             // 
             string[] xlsFiles = Directory.GetFiles(this.textBox_excelFolderPath.Text, "*.xls", SearchOption.AllDirectories);
             string[] xlsxFiles = Directory.GetFiles(this.textBox_excelFolderPath.Text, "*.xlsx", SearchOption.AllDirectories);
-
+            string[] xmlFiles = Directory.GetFiles(this.textBox_mapFolderPath.Text, "*.xml", SearchOption.AllDirectories);
 
             // 罗列文件
             textBox_log.Text += DateTime.Now.ToString() + "\tExcel03文件共计：" + xlsFiles.Length.ToString() + "个。\r\n";
@@ -87,9 +87,17 @@ namespace E2SWin
                 // 供测试用
             }
 
+            //供测试xml读取用
+            foreach (string xmlFile in xmlFiles)
+            {
+                XmlParser xmlParser = new XmlParser();
+                xmlParser.LoadXmlFile(xmlFile);
+                Hashtable hs = xmlParser.metalibMap;
+            }
+            //供测试xml读取用
 
             // 开始处理
-            encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
+            //encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
         }
 
         private delegate void NameCallBack(string varText);

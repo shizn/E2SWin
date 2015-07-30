@@ -106,8 +106,13 @@ namespace E2SWin
                                     SharedStringItem item = GetSharedStringItemById(spreadsheetDocument.WorkbookPart, Int32.Parse(cell.InnerText));
                                     cellValue = item.Text.Text ?? item.InnerText ?? item.InnerXml;
                                 }
+                                else if (cell.DataType == CellValues.String)
+                                {
+                                    cellValue = cell.CellValue.Text;
+                                }
                                 else
                                 {
+                                    // 未被支持的单元格内容格式
                                     throw new NotImplementedException();
                                 }
                             }
