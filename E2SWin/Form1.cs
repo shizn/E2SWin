@@ -50,12 +50,12 @@ namespace E2SWin
             textBox_log.Text += DateTime.Now.ToString() + "\tExcel03文件共计：" + xlsFiles.Length.ToString() + "个。\r\n";
             textBox_log.Text += DateTime.Now.ToString() + "\tExcel07文件共计：" + xlsxFiles.Length.ToString() + "个。\r\n";
 
-
+            List<SheetDataInfo> ret = new List<SheetDataInfo>();
             foreach(string xlsxFile in xlsxFiles)
             {
 
                 // 供测试用
-                List<SheetDataInfo> ret = ExcelParser.parseXlsx(xlsxFile, 2);
+                ret = ExcelParser.parseXlsx(xlsxFile, 2);
 
                 foreach (var r in ret)
                 {
@@ -93,6 +93,9 @@ namespace E2SWin
                 XmlParser xmlParser = new XmlParser();
                 xmlParser.LoadXmlFile(xmlFile);
                 Hashtable hs = xmlParser.metalibMap;
+
+                // 供测试macro替换使用
+                xmlParser.CheckSheetDataInfo(ret.First());
             }
             //供测试xml读取用
 

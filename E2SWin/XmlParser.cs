@@ -137,7 +137,7 @@ namespace E2SWin
                         macrosgroupInfo.macrosGroupInfos.Add(macroCname, macroInfo);
                     }
                     // 将整理好的内容放入Hashtable
-                    metalibMap.Add(macrosgroupInfo, macrosgroupName);
+                    metalibMap.Add(macrosgroupName, macrosgroupInfo);
                 }
             }
         }
@@ -145,6 +145,40 @@ namespace E2SWin
 
         public void CheckSheetDataInfo(SheetDataInfo sheetInfo)
         {
+            // 需要保证输入的sheet name和已经读取到的xml匹配
+            StructInfo structInfo = (StructInfo)metalibMap[sheetInfo.sheetName];
+            List<string> contentRow = sheetInfo.contentRow;
+            int contentRowCount = contentRow.Count;
+            for (int cc = 0; cc < contentRowCount; ++cc)
+            {
+                string content = contentRow[cc];
+                EntryInfo entryInfo = (EntryInfo)structInfo.structInfos[content];
+                // 存在字段
+                // 1. 判断type是否一致（目前没有type行）
+                // 2. 如果有宏定义则进行替换
+                if (entryInfo != null)
+                {
+                    // 判断type是否一致 pass
+
+                    int tableDataCount = sheetInfo.tableData.Count;
+                    for (int row = 0; row < tableDataCount; row++)
+                    {
+                        // 验证数据 pass
+                        List<string> rowData = sheetInfo.tableData[row];
+                        string cellValue = rowData[cc];
+                        
+                        // 如果有macrosgroup
+                        if (entryInfo.macrosgroup != string.Empty)
+                        {
+                            // 可以考虑做缓存提高效率
+                            MacrosGroupInfo correspondingMacrosGroup = (MacrosGroupInfo)metalibMap[entryInfo.macrosgroup];
+                            MacroInfo correspondingMacro = (MacroInfo)correspondingMacrosGroup.macrosGroupInfos[cellValue];
+                            // 替换
+                            cellValue = correspondingMacro.value;
+                        }
+                    }
+                }
+            }
 
         }
         
