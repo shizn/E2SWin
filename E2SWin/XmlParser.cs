@@ -174,7 +174,7 @@ namespace E2SWin
                             MacrosGroupInfo correspondingMacrosGroup = (MacrosGroupInfo)metalibMap[entryInfo.macrosgroup];
                             MacroInfo correspondingMacro = (MacroInfo)correspondingMacrosGroup.macrosGroupInfos[cellValue];
                             // 替换
-                            cellValue = correspondingMacro.value;
+                            rowData[cc] = correspondingMacro.value;
                         }
                     }
                 }

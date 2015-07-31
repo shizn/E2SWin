@@ -67,18 +67,19 @@
             // 
             // textBox_log
             // 
-            this.textBox_log.Location = new System.Drawing.Point(12, 166);
+            this.textBox_log.Location = new System.Drawing.Point(12, 122);
             this.textBox_log.Multiline = true;
             this.textBox_log.Name = "textBox_log";
+            this.textBox_log.ReadOnly = true;
             this.textBox_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_log.Size = new System.Drawing.Size(568, 166);
+            this.textBox_log.Size = new System.Drawing.Size(568, 210);
             this.textBox_log.TabIndex = 3;
             // 
             // textBox_mapFolderPath
             // 
-            this.textBox_mapFolderPath.Location = new System.Drawing.Point(13, 39);
+            this.textBox_mapFolderPath.Location = new System.Drawing.Point(12, 39);
             this.textBox_mapFolderPath.Name = "textBox_mapFolderPath";
-            this.textBox_mapFolderPath.Size = new System.Drawing.Size(486, 21);
+            this.textBox_mapFolderPath.Size = new System.Drawing.Size(487, 21);
             this.textBox_mapFolderPath.TabIndex = 4;
             // 
             // button_mapFolder
@@ -119,6 +120,7 @@
             this.Controls.Add(this.button_export);
             this.Controls.Add(this.textBox_excelFolderPath);
             this.Controls.Add(this.button_excelFolderPath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
