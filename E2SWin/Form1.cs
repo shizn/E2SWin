@@ -16,9 +16,21 @@ namespace E2SWin
     {
         public Encoder encoder = new Encoder();
         public XmlParser xmlParser = new XmlParser();
+        public Config config;
         public MainForm()
         {
             InitializeComponent();
+
+            // 读取已保存设置
+            config = Config.LoadConfig();
+            if (config == null)
+            {
+                config = new Config();
+                config.SaveConfig();
+            }
+            this.textBox_excelFolderPath.Text = config.excelFolderPath;
+            this.textBox_exportFolderPath.Text = config.exportFolderPath;
+            this.textBox_mapFolderPath.Text = config.mapFolderPath;
         }
 
         private void button_excelFolderPath_Click(object sender, EventArgs e)
@@ -35,6 +47,8 @@ namespace E2SWin
             this.textBox_excelFolderPath.Text = fDialog.SelectedPath;
 
             // 更新设置
+            config.excelFolderPath = this.textBox_excelFolderPath.Text;
+            config.SaveConfig();
         }
 
         private void XlsxFilePrinter(List<SheetDataInfo> sheetList)
@@ -121,8 +135,11 @@ namespace E2SWin
                 // 导出
                 encoder.Export(ret, this.textBox_exportFolderPath.Text, false);
             }
-            // 开始导出到SQLite
-            //encoder.Export(this.textBox_excelFolderPath.Text, this.textBox_exportFolderPath.Text, false);
+            // 更新设置
+            config.excelFolderPath = this.textBox_excelFolderPath.Text;
+            config.mapFolderPath = this.textBox_exportFolderPath.Text;
+            config.exportFolderPath = this.textBox_exportFolderPath.Text;
+            config.SaveConfig();
         }
 
         private delegate void NameCallBack(string varText);
@@ -137,6 +154,61 @@ namespace E2SWin
                 textBox_log.Text = input;
                 // textBox.Text = textBox.Text + Environment.NewLine + input // This might work as append in next line but haven't tested so not sure
             }
+        }
+
+        private void button_mapFolder_Click(object sender, EventArgs e)
+        {
+            // 文件夹选取窗口
+            FolderBrowserDialog fDialog = new FolderBrowserDialog();
+            fDialog.SelectedPath = this.textBox_mapFolderPath.Text;
+            fDialog.Description = "请选取xml描述文件对应目录";
+            if (fDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            // 得到xml文件夹路径并更新textbox
+            this.textBox_mapFolderPath.Text = fDialog.SelectedPath;
+            // 更新设置
+            config.mapFolderPath = this.textBox_exportFolderPath.Text;
+            config.SaveConfig();
+        }
+
+        private void button_exportFolder_Click(object sender, EventArgs e)
+        {
+            // 文件夹选取窗口
+            FolderBrowserDialog fDialog = new FolderBrowserDialog();
+            fDialog.SelectedPath = this.textBox_exportFolderPath.Text;
+            fDialog.Description = "请选取Excel存放目录";
+            if (fDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            // 得到导出数据库文件夹路径并更新textbox
+            this.textBox_exportFolderPath.Text = fDialog.SelectedPath;
+            // 更新设置
+            config.exportFolderPath = this.textBox_exportFolderPath.Text;
+            config.SaveConfig();
+        }
+
+        private void textBox_exportFolderPath_TextChanged(object sender, EventArgs e)
+        {
+            // 更新设置
+            config.exportFolderPath = this.textBox_exportFolderPath.Text;
+            config.SaveConfig();
+        }
+
+        private void textBox_mapFolderPath_TextChanged(object sender, EventArgs e)
+        {
+            // 更新设置
+            config.mapFolderPath = this.textBox_mapFolderPath.Text;
+            config.SaveConfig();
+        }
+
+        private void textBox_excelFolderPath_TextChanged(object sender, EventArgs e)
+        {
+            // 更新设置
+            config.excelFolderPath = this.textBox_excelFolderPath.Text;
+            config.SaveConfig();
         }
     }
 }

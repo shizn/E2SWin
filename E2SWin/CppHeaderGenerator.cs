@@ -7,7 +7,7 @@ using System.IO;
 
 namespace E2SWin
 {
-    class CppHeaderGenerator
+    public class CppHeaderGenerator
     {
         public void WriteToCppHeader(SheetDataInfo dataInfo, string cppHeaderFullPath)
         {

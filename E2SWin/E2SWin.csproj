@@ -66,6 +66,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="CppHeaderGenerator.cs" />
     <Compile Include="CSharpGenerator.cs" />
     <Compile Include="Encoder.cs" />

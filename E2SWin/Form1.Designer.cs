@@ -54,6 +54,7 @@
             this.textBox_excelFolderPath.Name = "textBox_excelFolderPath";
             this.textBox_excelFolderPath.Size = new System.Drawing.Size(487, 21);
             this.textBox_excelFolderPath.TabIndex = 1;
+            this.textBox_excelFolderPath.TextChanged += new System.EventHandler(this.textBox_excelFolderPath_TextChanged);
             // 
             // button_export
             // 
@@ -81,6 +82,7 @@
             this.textBox_mapFolderPath.Name = "textBox_mapFolderPath";
             this.textBox_mapFolderPath.Size = new System.Drawing.Size(487, 21);
             this.textBox_mapFolderPath.TabIndex = 4;
+            this.textBox_mapFolderPath.TextChanged += new System.EventHandler(this.textBox_mapFolderPath_TextChanged);
             // 
             // button_mapFolder
             // 
@@ -90,6 +92,7 @@
             this.button_mapFolder.TabIndex = 5;
             this.button_mapFolder.Text = "映射目录";
             this.button_mapFolder.UseVisualStyleBackColor = true;
+            this.button_mapFolder.Click += new System.EventHandler(this.button_mapFolder_Click);
             // 
             // textBox_exportFolderPath
             // 
@@ -97,6 +100,7 @@
             this.textBox_exportFolderPath.Name = "textBox_exportFolderPath";
             this.textBox_exportFolderPath.Size = new System.Drawing.Size(487, 21);
             this.textBox_exportFolderPath.TabIndex = 6;
+            this.textBox_exportFolderPath.TextChanged += new System.EventHandler(this.textBox_exportFolderPath_TextChanged);
             // 
             // button_exportFolder
             // 
@@ -106,6 +110,7 @@
             this.button_exportFolder.TabIndex = 7;
             this.button_exportFolder.Text = "导出目录";
             this.button_exportFolder.UseVisualStyleBackColor = true;
+            this.button_exportFolder.Click += new System.EventHandler(this.button_exportFolder_Click);
             // 
             // MainForm
             // 

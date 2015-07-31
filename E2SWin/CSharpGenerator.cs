@@ -7,7 +7,7 @@ using System.IO;
 
 namespace E2SWin
 {
-    class CSharpGenerator
+    public class CSharpGenerator
     {
         public void WriteToCSharp(SheetDataInfo dataInfo, string cSharpFullPath)
         {
